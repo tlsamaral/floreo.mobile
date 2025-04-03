@@ -1,20 +1,40 @@
-import { ImageBackground, View } from 'react-native'
 import '../styles/global.css'
 
-import { Slot } from 'expo-router'
-import Contants from 'expo-constants'
+import { useFonts } from 'expo-font'
+import * as SplashScreen from 'expo-splash-screen'
+import { useEffect } from 'react'
 
-const statusBarHeight = Contants.statusBarHeight
+import {
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins'
+import { Stack } from 'expo-router'
+
+//
+SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  })
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync()
+    }
+  }, [fontsLoaded])
+
+  if (!fontsLoaded) {
+    return null
+  }
+
   return (
-    <ImageBackground
-      source={require('../assets/auth-root.png')}
-      style={{ flex: 1 }}
-    >
-      <View className="flex-1 px-8" style={{ paddingTop: statusBarHeight }}>
-        <Slot />
-      </View>
-    </ImageBackground>
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="auth/sign-in" options={{ headerShown: false }} />
+    </Stack>
   )
 }
