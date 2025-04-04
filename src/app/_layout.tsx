@@ -11,7 +11,8 @@ import {
 } from '@expo-google-fonts/poppins'
 import { Stack } from 'expo-router'
 
-//
+import '../../global.css'
+
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
