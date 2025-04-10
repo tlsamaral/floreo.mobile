@@ -1,27 +1,44 @@
-import { TextInput, View } from 'react-native'
+import { View, Text } from 'react-native'
+import { Input, inputVariants, type InputProps } from './ui/Input'
+import type { ReactNode } from 'react'
+import { cn } from '@/lib/utils'
 
-interface InputProps extends React.ComponentProps<typeof TextInput> {
-  icon?: React.ReactNode
-  variant?: 'default' | 'light-blur'
+interface CustomInputProps extends InputProps {
+  icon?: ReactNode
+  prefix?: string
 }
-export function Input({
-  icon: Icon,
-  variant = 'default',
-  ...props
-}: InputProps) {
-  if (variant === 'light-blur') {
-    return (
-      <View className="h-10 text-primary-50 border border-primary-50 rounded-md flex-row items-center w-full bg-[#fdfdf9]/10 filter backdrop-blur">
-        {Icon && Icon}
-        <TextInput {...props} className="flex-1 p-2" />
-      </View>
-    )
-  }
 
+export function TextInput({
+  icon,
+  prefix,
+  variant = 'default',
+  size = 'default',
+  className,
+  ...props
+}: CustomInputProps) {
   return (
-    <View className="h-10 text-primary-50 border border-primary-50 rounded-md flex-row items-center w-full">
-      {Icon && Icon}
-      <TextInput {...props} className="flex-1 p-2" />
+    <View
+      className={cn(
+        'flex-row items-center gap-2',
+        inputVariants({ size, variant }),
+        props.editable === false && 'opacity-50 web:cursor-not-allowed',
+        className,
+      )}
+    >
+      {icon && <View className="mr-2">{icon}</View>}
+
+      {prefix && (
+        <Text className="text-brand-100 text-base font-medium mr-1">
+          {prefix}/
+        </Text>
+      )}
+
+      <Input
+        variant={variant}
+        size={size}
+        className={cn('flex-1 p-0 bg-transparent border-0', className)}
+        {...props}
+      />
     </View>
   )
 }
