@@ -1,5 +1,5 @@
 export const colors = {
-  primary: {
+  brand: {
     50: '#EEF4EE',
     100: '#CADEC9',
     200: '#B1CDAF',
@@ -11,7 +11,7 @@ export const colors = {
     800: '#2F512D',
     900: '#243E22',
   },
-  secondary: {
+  second: {
     50: '#FDFDF9',
     100: '#F8FAEC',
     200: '#F4F8E2',
