@@ -1,9 +1,9 @@
 const { hairlineWidth } = require('nativewind/theme')
+const colorsSystem = require('./constants/colors').colors
+const colorsTailwind = require('tailwindcss/colors')
+const { fontFamily } = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
-
-import { colors as colorsSystem } from './constants/colors'
-
-import colorsTailwind from 'tailwindcss/colors'
 
 const colors = {
   ...colorsSystem,
@@ -12,11 +12,12 @@ const colors = {
 
 module.exports = {
   darkMode: 'class',
-  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  content: ['./src/app/**/*.{ts,tsx}', './src/components/**/*.{ts,tsx}'],
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
       colors: {
+        ...colors,
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -67,6 +68,12 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      fontFamily: {
+        sans: ['Poppins_400Regular', ...fontFamily.sans],
+        regular: ['Poppins_400Regular'],
+        medium: ['Poppins_500Medium'],
+        bold: ['Poppins_700Bold'],
       },
     },
   },
