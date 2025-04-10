@@ -1,7 +1,7 @@
 import Contants from 'expo-constants'
 import { Asset } from 'expo-asset'
 import { Slot } from 'expo-router'
-import { ImageBackground, View } from 'react-native'
+import { View } from 'react-native'
 
 const statusBarHeight = Contants.statusBarHeight
 const backgroundImage = Asset.fromModule(
@@ -10,14 +10,14 @@ const backgroundImage = Asset.fromModule(
 
 export default function AuthLayout() {
   return (
-    <ImageBackground
-      source={{ uri: backgroundImage }}
-      style={{ flex: 1 }}
-      resizeMode="cover"
-    >
-      <View className="px-6">
-        <Slot />
-      </View>
-    </ImageBackground>
+    // <ImageBackground
+    //   source={{ uri: backgroundImage }}
+    //   style={{ flex: 1 }}
+    //   resizeMode="cover"
+    // >
+    <View className="px-10 flex-1 bg-brand-900">
+      <Slot />
+    </View>
+    // </ImageBackground>
   )
 }
