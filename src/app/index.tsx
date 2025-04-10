@@ -15,19 +15,20 @@ export default function Index() {
       resizeMode="cover"
     >
       <View className="flex-1 flex-col justify-end items-end pb-[150px] px-6">
-        <View className="flex-col gap-4 w-full">
+        <View className="flex-col gap-4 w-full ">
           <Button
             className="rounded-full"
-            variant="secondary"
+            variant="second"
             onPress={() => router.push('/auth/sign-in')}
           >
-            <Text>Destructive</Text>
+            <Text>Vamos começar</Text>
           </Button>
           <Button
             className="rounded-full"
+            variant="brand"
             onPress={() => router.push('/auth/sign-in')}
           >
-            <Text>Destructive</Text>
+            <Text>Acessar a minha conta</Text>
           </Button>
         </View>
       </View>
