@@ -11,13 +11,13 @@ import {
 } from '@expo-google-fonts/poppins'
 import { Stack } from 'expo-router'
 
-import '../../global.css'
+import '../styles/global.css'
 
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
-    Poppins_400Regular,
+    Poppins: Poppins_400Regular,
     Poppins_500Medium,
     Poppins_700Bold,
   })
@@ -32,10 +32,5 @@ export default function RootLayout() {
     return null
   }
 
-  return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="auth/sign-in" options={{ headerShown: false }} />
-    </Stack>
-  )
+  return <Stack screenOptions={{ headerShown: false }} />
 }
