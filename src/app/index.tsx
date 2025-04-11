@@ -19,7 +19,7 @@ export default function Index() {
           <Button
             className="rounded-full"
             variant="second"
-            onPress={() => router.push('/auth/sign-in')}
+            onPress={() => router.push('/auth/sign-up')}
           >
             <Text>Vamos começar</Text>
           </Button>
