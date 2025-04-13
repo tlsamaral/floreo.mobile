@@ -3,12 +3,13 @@ import { Button } from '@/components/ui/Button'
 import { Separator } from '@/components/ui/Separator'
 import { Text } from '@/components/ui/Text'
 import { Text as NativeText } from 'react-native'
-import { Link } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 import { View } from 'react-native'
 
 // import GoogleIcon from '@/assets/icons/google.svg'
 
 export default function SignIn() {
+  const router = useRouter()
   return (
     <View className="flex-1 gap-8 justify-center items-center">
       <View className="gap-8 w-full mt-auto">
@@ -37,7 +38,11 @@ export default function SignIn() {
       </View>
 
       <View className="gap-5 w-full" id="buttons">
-        <Button variant="second" className="w-full rounded-full">
+        <Button
+          variant="second"
+          className="w-full rounded-full"
+          onPress={() => router.push('/(tabs)/home')}
+        >
           <Text className="font-semibold">Acessar</Text>
         </Button>
 
