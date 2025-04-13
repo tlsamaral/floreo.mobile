@@ -14,24 +14,34 @@ export default function SignUp() {
       <View className="gap-8 w-full mt-auto">
         <View>
           <Text className="text-2xl font-bold antialiased leading-tight text-center">
-            Bem vindo de volta
+            Novo por aqui?
           </Text>
           <NativeText className="text-brand-200 text-center text-lg">
-            Acesse sua conta
+            Crie sua conta e cultive
           </NativeText>
         </View>
 
         <View className="flex-col gap-1 mt-auto">
-          <Text className="text-[18px]">Email</Text>
+          <Text className="text-lg">Nome</Text>
+          <TextInput placeholder="Digite seu nome" variant="light" />
+        </View>
+
+        <View className="flex-col gap-1 mt-auto">
+          <Text className="text-lg">Email</Text>
           <TextInput placeholder="Digite seu email" variant="light" />
         </View>
 
         <View className="flex-col gap-1">
-          <Text className="text-[18px]">Senha</Text>
+          <Text className="text-lg">Senha</Text>
+          <TextInput placeholder="Sua senha" variant="light" secureTextEntry />
+        </View>
+
+        <View className="flex-col gap-1">
+          <Text className="text-lg">Confirme sua senha</Text>
           <TextInput
-            placeholder="Sua senha"
+            placeholder="Confirme sua senha"
             variant="light"
-            secureTextEntry={true}
+            secureTextEntry
           />
         </View>
       </View>
@@ -45,18 +55,18 @@ export default function SignUp() {
 
         <Button variant="second" className="w-full rounded-full">
           {/* <GoogleIcon /> */}
-          <Text className="font-semibold">Acessar com Google</Text>
+          <Text className="font-semibold">Me cadastrar com Google</Text>
         </Button>
 
         <View className="flex-row gap-1 items-center justify-center">
           <NativeText className="text-second-100">
-            Não tem uma conta?
+            Já possui uma conta?
           </NativeText>
           <Link
             href="/auth/sign-in"
             className="text-tertiary-200 underline underline-offset-1 text-base"
           >
-            Cadastre-se
+            Acesse aqui
           </Link>
         </View>
 
