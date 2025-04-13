@@ -22,12 +22,12 @@ export default function SignIn() {
         </View>
 
         <View className="flex-col gap-1 mt-auto">
-          <Text className="text-[18px]">Email</Text>
+          <Text className="text-lg">Email</Text>
           <TextInput placeholder="Digite seu email" variant="light" />
         </View>
 
         <View className="flex-col gap-1">
-          <Text className="text-[18px]">Senha</Text>
+          <Text className="text-lg">Senha</Text>
           <TextInput
             placeholder="Sua senha"
             variant="light"
