@@ -6,10 +6,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-@theme {
-  --font-display: "Poppins", "sans-serif";
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
