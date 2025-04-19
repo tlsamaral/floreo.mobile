@@ -30,6 +30,7 @@ export default function SignIn() {
 
   async function handleSignIn(data: SignInFormData) {
     console.log('Sign in Data:', data)
+    router.replace('/(tabs)/home')
   }
 
   return (
