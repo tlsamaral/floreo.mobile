@@ -6,11 +6,34 @@ import { Text as NativeText } from 'react-native'
 import { Link, useRouter } from 'expo-router'
 import { View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 // import GoogleIcon from '@/assets/icons/google.svg'
 
+const signInSchema = z.object({
+  email: z.string().email('Email inválido'),
+  password: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres'),
+})
+
+type SignInFormData = z.infer<typeof signInSchema>
+
 export default function SignIn() {
   const router = useRouter()
+
+  const { control, handleSubmit } = useForm({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
+
+  async function handleSignIn(data: SignInFormData) {
+    console.log('Sign in Data:', data)
+  }
+
   return (
     <View className="flex-1 gap-8 justify-center items-center">
       <View className="gap-8 w-full mt-auto">
@@ -25,20 +48,39 @@ export default function SignIn() {
 
         <View className="flex-col gap-1 mt-auto">
           <Text className="text-lg">Email</Text>
-          <TextInput
-            icon={<AntDesign name="mail" color="#CADEC9" size={20} />}
-            placeholder="Digite seu email"
-            variant="light"
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                icon={<AntDesign name="mail" color="#CADEC9" size={20} />}
+                placeholder="Digite seu email"
+                variant="light"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
+            )}
           />
         </View>
 
         <View className="flex-col gap-1">
           <Text className="text-lg">Senha</Text>
-          <TextInput
-            icon={<AntDesign name="lock1" color="#CADEC9" size={20} />}
-            placeholder="Sua senha"
-            variant="light"
-            secureTextEntry={true}
+
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                icon={<AntDesign name="lock" color="#CADEC9" size={20} />}
+                placeholder="Digite sua senha"
+                variant="light"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                secureTextEntry
+              />
+            )}
           />
         </View>
       </View>
@@ -47,7 +89,7 @@ export default function SignIn() {
         <Button
           variant="second"
           className="w-full rounded-full"
-          onPress={() => router.push('/(tabs)/home')}
+          onPress={handleSubmit(handleSignIn)}
         >
           <Text className="font-semibold">Acessar</Text>
         </Button>
