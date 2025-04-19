@@ -21,7 +21,7 @@ const inputVariants = cva(
         default: '',
         ghost: 'bg-transparent border-transparent focus-visible:ring-0',
         light:
-          'bg-[#FDFDF9]/10 border border-brand-50 placeholder:text-brand-100/40 text-brand-100',
+          'bg-[#FDFDF9]/10 border border-brand-50 placeholder:text-brand-50/50 text-brand-50',
       },
     },
     defaultVariants: {
