@@ -9,7 +9,6 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { AntDesign } from '@expo/vector-icons'
-// import GoogleIcon from '@/assets/icons/google.svg'
 
 const signUpSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
