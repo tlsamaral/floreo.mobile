@@ -24,16 +24,16 @@
     },
     "plugins": [
       "expo-router",
+      "expo-asset",
+      "expo-font",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/splash.png",
           "resizeMode": "contain",
           "backgroundColor": "#EEF4EE"
         }
-      ],
-      "expo-asset",
-      "expo-font"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
