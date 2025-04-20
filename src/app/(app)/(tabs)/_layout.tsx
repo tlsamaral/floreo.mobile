@@ -70,6 +70,7 @@ export default function TabsLayout() {
         name="profile"
         options={{
           title: 'Perfil',
+
           tabBarIcon: ({ color, focused, size }) => (
             <View style={[styles.iconContainer, focused && styles.activeIcon]}>
               <User size={28} color={color} />
@@ -86,12 +87,14 @@ const styles = StyleSheet.create({
     position: 'fixed',
     height: 60,
     width: '90%',
-    paddingVertical: 12,
+
     paddingHorizontal: 20,
     marginHorizontal: 'auto',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     bottom: 32,
-    left: 20,
-    right: 20,
     backgroundColor: '#243E22',
     borderRadius: 999,
     elevation: 5,
@@ -102,11 +105,12 @@ const styles = StyleSheet.create({
   iconContainer: {
     backgroundColor: 'transparent',
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 999,
     justifyContent: 'center',
     alignItems: 'center',
     height: 44,
     width: 44,
+    marginTop: 4,
   },
   activeIcon: {
     backgroundColor: '#FDFDF9',
