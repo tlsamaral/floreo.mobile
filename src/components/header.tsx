@@ -23,7 +23,7 @@ export function getGreetingWithEmoji(): string {
 export function Header() {
   return (
     <View
-      className="w-11/12 mx-auto flex-row items-center justify-between px-10 pb-3 border-b border-b-second-600 bg-second-50"
+      className="w-[85%] mx-auto flex-row items-center justify-between py-3 border-b border-b-second-600 bg-second-50"
       style={{ paddingTop: statusBarHeight }}
     >
       <View className="flex-row items-center gap-2">
