@@ -23,6 +23,8 @@ const buttonVariants = cva(
         link: 'web:underline-offset-4 web:hover:underline web:focus:underline ',
         brand: 'bg-brand-700',
         second: 'bg-second-50',
+        alternative:
+          'bg-tertiary-100 web:hover:opacity-80 active:opacity-80 w-full rounded-full px-4',
       },
       size: {
         default: 'h-10 px-4 py-2 native:h-12 native:px-5 native:py-3',
@@ -52,6 +54,7 @@ const buttonTextVariants = cva(
         link: 'text-primary group-active:underline',
         brand: 'text-second-100',
         second: 'text-brand-900',
+        alternative: 'text-brand-900 text-lg font-medium',
       },
       size: {
         default: '',
