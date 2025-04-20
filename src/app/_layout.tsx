@@ -13,6 +13,11 @@ import '../styles/global.css'
 
 SplashScreen.preventAutoHideAsync()
 
+SplashScreen.setOptions({
+  duration: 1000,
+  fade: true,
+})
+
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     Poppins: Poppins_400Regular,
