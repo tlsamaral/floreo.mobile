@@ -10,11 +10,18 @@ import {
   UserRoundPen,
 } from 'lucide-react-native'
 
+import Contants from 'expo-constants'
+
+const statusBarHeight = Contants.statusBarHeight
+
 export default function ProfileScreen() {
   const router = useRouter()
 
   return (
-    <View className="flex-1 items-center gap-14 bg-second-50 py-9 px-7">
+    <View
+      className="flex-1 items-center gap-14 bg-second-50 py-9 px-7"
+      style={{ paddingTop: statusBarHeight + 8 }}
+    >
       <Text className="text-brand-900 text-2xl font-bold">Meu Perfil</Text>
 
       <View className="gap-4 items-center">
