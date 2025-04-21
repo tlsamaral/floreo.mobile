@@ -3,11 +3,18 @@ import { useRouter } from 'expo-router'
 import { Text } from '../ui/Text'
 import { ChevronLeft } from 'lucide-react-native'
 
+import Contants from 'expo-constants'
+
+const statusBarHeight = Contants.statusBarHeight
+
 export default function ProfileHeader({ title }: { title: string }) {
   const router = useRouter()
 
   return (
-    <View className="h-16 bg-gray-100 px-6 pt-3 flex-row items-center justify-between">
+    <View
+      className="h-16 bg-gray-100 px-6 flex-row items-center justify-between"
+      style={{ paddingTop: statusBarHeight + 8 }}
+    >
       <TouchableOpacity
         className="size-7 rounded-full bg-brand-900 flex justify-center items-center"
         onPress={() => router.replace('/(app)/(tabs)/profile')}
