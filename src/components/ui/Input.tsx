@@ -8,7 +8,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const inputVariants = cva(
-  'web:flex web:w-full rounded-md border border-input bg-background px-3 text-base text-foreground placeholder:text-muted-foreground web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-1 web:focus-visible:ring-ring web:focus-visible:ring-offset-0',
+  'web:flex web:w-full rounded-lg border border-input bg-background px-3 text-base text-foreground placeholder:text-muted-foreground web:ring-offset-background web:focus-visible:outline-none web:focus-visible:ring-1 web:focus-visible:ring-ring web:focus-visible:ring-offset-0',
   {
     variants: {
       size: {
@@ -22,6 +22,8 @@ const inputVariants = cva(
         ghost: 'bg-transparent border-transparent focus-visible:ring-0',
         light:
           'bg-[#FDFDF9]/10 border border-brand-50 placeholder:text-brand-50/50 text-brand-50',
+        'normal-blur':
+          'bg-[#243E22]/5 border border-brand-900 placeholder:text-brand-900/50 text-brand-900',
       },
     },
     defaultVariants: {
