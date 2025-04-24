@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button'
 import {
   ChevronRight,
   LockKeyhole,
+  LogOut,
   MapPin,
   UserRoundPen,
 } from 'lucide-react-native'
@@ -72,6 +73,15 @@ export default function ProfileScreen() {
           <ChevronRight color="#243E22" />
         </Button>
       </View>
+
+      <Button
+        variant="brand"
+        className="flex-row items-center gap-2 rounded-full w-full bg-brand-900"
+        onPress={() => router.push('/(app)/(tabs)/profile/change-password')}
+      >
+        <LogOut color="#fff" size={20} />
+        <Text>Sair</Text>
+      </Button>
     </View>
   )
 }
