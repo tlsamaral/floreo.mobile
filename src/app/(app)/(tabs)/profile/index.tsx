@@ -63,7 +63,9 @@ export default function ProfileScreen() {
         <Button
           variant="alternative"
           className="flex-row items-center justify-between"
-          onPress={() => router.push('/(app)/(tabs)/profile/change-password')}
+          onPress={() =>
+            router.push('/(app)/(tabs)/profile/change-password-failure')
+          }
         >
           <View className="flex-row items-center gap-2">
             <LockKeyhole color="#243E22" />
