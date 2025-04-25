@@ -21,7 +21,7 @@ export default function TabsLayout() {
           width: '90%',
           marginHorizontal: 'auto',
           paddingHorizontal: 20,
-          paddingVertical: 12,
+          // paddingVertical: 12,
         },
       }}
     >
@@ -87,15 +87,15 @@ export default function TabsLayout() {
 const styles = StyleSheet.create({
   tabBar: {
     position: 'fixed',
-    height: 60,
     width: '90%',
+    height: 60,
     paddingHorizontal: 20,
     marginHorizontal: 'auto',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     bottom: 32,
+    paddingTop: 10,
     backgroundColor: '#243E22',
     borderRadius: 999,
     elevation: 5,
