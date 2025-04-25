@@ -14,10 +14,8 @@ export function getGreetingWithEmoji(): string {
   if (hour >= 12 && hour < 18) {
     return 'Boa tarde 🌤️'
   }
-  if (hour >= 18 && hour < 22) {
-    return 'Boa noite 🌙'
-  }
-  return 'Boa madrugada 🌌'
+
+  return 'Boa noite 🌑'
 }
 
 export function Header() {
