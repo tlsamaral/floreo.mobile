@@ -1,18 +1,21 @@
 // app/(tabs)/_layout.tsx
-import { Tabs } from 'expo-router'
+import { Tabs, usePathname } from 'expo-router'
 import { View, StyleSheet } from 'react-native'
 import { ChartPie, Component, House, Leaf, User } from 'lucide-react-native'
 
 export default function TabsLayout() {
+  const pathname = usePathname()
+  const isProfilePage =
+    pathname?.startsWith('/profile') && pathname !== '/profile'
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         animation: 'shift',
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: isProfilePage ? { display: 'none' } : styles.tabBar,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: '#2F512D', // cor do ícone ativo
-        tabBarInactiveTintColor: '#F8FAEC', // cor do ícone inativo
+        tabBarActiveTintColor: '#2F512D',
+        tabBarInactiveTintColor: '#F8FAEC',
         tabBarItemStyle: {
           borderRadius: 50,
           width: '90%',
@@ -70,7 +73,6 @@ export default function TabsLayout() {
         name="profile"
         options={{
           title: 'Perfil',
-
           tabBarIcon: ({ color, focused, size }) => (
             <View style={[styles.iconContainer, focused && styles.activeIcon]}>
               <User size={28} color={color} />
@@ -87,7 +89,6 @@ const styles = StyleSheet.create({
     position: 'fixed',
     height: 60,
     width: '90%',
-
     paddingHorizontal: 20,
     marginHorizontal: 'auto',
     display: 'flex',
@@ -110,7 +111,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 44,
     width: 44,
-    marginTop: 4,
   },
   activeIcon: {
     backgroundColor: '#FDFDF9',
