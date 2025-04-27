@@ -1,5 +1,5 @@
 // app/(tabs)/profile/_layout.tsx
-import ProfileHeader from '@/components/profile/header'
+import { AppHeader } from '@/components/app-header'
 import { Stack } from 'expo-router'
 
 export default function ProfileStackLayout() {
@@ -9,25 +9,45 @@ export default function ProfileStackLayout() {
       <Stack.Screen
         name="change-profile"
         options={{
-          header: () => <ProfileHeader title="Atualizar perfil" />,
+          header: () => (
+            <AppHeader
+              title="Atualizar perfil"
+              returnTo="/profile/change-profile"
+            />
+          ),
         }}
       />
       <Stack.Screen
         name="change-address"
         options={{
-          header: () => <ProfileHeader title="Meu endereço" />,
+          header: () => (
+            <AppHeader
+              title="Meu endereço"
+              returnTo="/profile/change-address"
+            />
+          ),
         }}
       />
       <Stack.Screen
         name="change-password"
         options={{
-          header: () => <ProfileHeader title="Alterar minha senha" />,
+          header: () => (
+            <AppHeader
+              title="Alterar minha senha"
+              returnTo="/profile/change-password"
+            />
+          ),
         }}
       />
       <Stack.Screen
         name="change-password-failure"
         options={{
-          header: () => <ProfileHeader title="Alterar minha senha" />,
+          header: () => (
+            <AppHeader
+              title="Alterar minha senha"
+              returnTo="/profile/change-password-failure"
+            />
+          ),
         }}
       />
     </Stack>
