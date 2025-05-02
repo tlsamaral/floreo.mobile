@@ -6,7 +6,9 @@ import { ChartPie, Component, House, Leaf, User } from 'lucide-react-native'
 export default function TabsLayout() {
   const pathname = usePathname()
   const isProfilePage =
-    pathname?.startsWith('/profile') && pathname !== '/profile'
+    (pathname?.startsWith('/profile') && pathname !== '/profile') ||
+    pathname === '/engines/new-engine'
+  console.log(pathname)
   return (
     <Tabs
       screenOptions={{
