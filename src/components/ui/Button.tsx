@@ -21,7 +21,7 @@ const buttonVariants = cva(
         ghost:
           'web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
         link: 'web:underline-offset-4 web:hover:underline web:focus:underline ',
-        brand: 'bg-brand-700',
+        brand: 'bg-brand-900',
         second: 'bg-second-50',
         alternative:
           'bg-tertiary-100 web:hover:opacity-80 active:opacity-80 w-full rounded-full px-4',
