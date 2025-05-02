@@ -8,7 +8,7 @@ export default function TabsLayout() {
   const isProfilePage =
     (pathname?.startsWith('/profile') && pathname !== '/profile') ||
     pathname === '/engines/new-engine'
-  console.log(pathname)
+
   return (
     <Tabs
       screenOptions={{
