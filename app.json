@@ -15,7 +15,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#EEF4EE"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.CAMERA"
+      ],
+      "package": "com.anonymous.floreo.mobile"
     },
     "web": {
       "bundler": "metro",
@@ -33,7 +38,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#EEF4EE"
         }
-      ]
+      ],
+      "expo-barcode-scanner"
     ],
     "experiments": {
       "typedRoutes": true
