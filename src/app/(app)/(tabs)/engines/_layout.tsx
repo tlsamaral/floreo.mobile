@@ -12,7 +12,7 @@ export default function EnginesStackLayout() {
         }}
       />
       <Stack.Screen
-        name="empty"
+        name="new-engine"
         options={{
           headerShown: false,
           header: () => (
