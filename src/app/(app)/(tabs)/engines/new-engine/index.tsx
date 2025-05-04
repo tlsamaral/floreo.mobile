@@ -19,6 +19,11 @@ export default function NewEngineScreen() {
 
   function handleOpenCamera() {
     setModalVisible(true)
+
+    setTimeout(() => {
+      setModalVisible(false)
+      router.push('/engines/new-engine/success')
+    }, 2000)
   }
 
   function handleQRCodeScanned({ data }: BarcodeScanningResult) {
