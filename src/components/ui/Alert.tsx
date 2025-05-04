@@ -17,6 +17,7 @@ const alertVariants = cva(
         default: '',
         destructive: 'border-destructive',
         warning: 'bg-[#664D16]/85 border-accent-100 border-2',
+        success: 'bg-[#0F410D] border border-primary-600',
       },
     },
     defaultVariants: {
@@ -47,6 +48,14 @@ const Alert = forwardRef<
     ref,
   ) => {
     const { colors } = useTheme()
+    const iconColor =
+      variant === 'destructive'
+        ? colors.notification
+        : variant === 'warning'
+          ? '#FFCF50'
+          : variant === 'success'
+            ? '#77A974'
+            : colors.text
     return (
       <View
         ref={ref}
@@ -55,16 +64,7 @@ const Alert = forwardRef<
         {...props}
       >
         <View className="absolute left-3.5 top-4 -translate-y-0.5 mt-1">
-          <Icon
-            size={iconSize}
-            color={
-              variant === 'destructive'
-                ? colors.notification
-                : variant === 'warning'
-                  ? '#FFCF50'
-                  : colors.text
-            }
-          />
+          <Icon size={iconSize} color={iconColor} />
         </View>
         {children}
       </View>
