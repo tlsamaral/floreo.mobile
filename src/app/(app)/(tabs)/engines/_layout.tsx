@@ -12,14 +12,10 @@ export default function EnginesStackLayout() {
         }}
       />
       <Stack.Screen
-        name="new-engine"
+        name="new-engine/index"
         options={{
-          headerShown: false,
           header: () => (
-            <AppHeader
-              title="Adicionar Floreo"
-              returnTo="/engines/new-engine"
-            />
+            <AppHeader title="Adicionar Floreo" returnTo="/engines" />
           ),
         }}
       />
