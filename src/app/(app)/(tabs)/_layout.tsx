@@ -50,7 +50,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="plants"
+        name="plants/index"
         options={{
           title: 'Plantas',
           tabBarIcon: ({ color, focused, size }) => (
