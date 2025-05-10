@@ -24,7 +24,7 @@ export default function Index() {
             <Text>Vamos começar</Text>
           </Button>
           <Button
-            className="rounded-full"
+            className="rounded-full bg-brand-700"
             variant="brand"
             onPress={() => router.push('/auth/sign-in')}
           >
