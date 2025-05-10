@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function EngineScreen() {
   const insets = useSafeAreaInsets()
-  const engines = Array.from({ length: 0 })
+  const engines = Array.from({ length: 4 })
 
   return (
     <ScrollView
@@ -36,6 +36,7 @@ export default function EngineScreen() {
               title="🌱 Vamos começar"
               description="Clique abaixo para configurar seu vaso inteligente agora mesmo e dê vida às suas plantas!"
             />
+
             <Link href="/(app)/(tabs)/engines/new-engine" asChild>
               <Button
                 className="w-full rounded-full border-brand-900"
