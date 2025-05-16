@@ -6,7 +6,7 @@ import { Link } from 'expo-router'
 
 export function PlantCard() {
   return (
-    <Link href="/(app)/(tabs)/engines/1">
+    <Link href="/(app)/(tabs)/plants/1">
       <Card className="bg-second-200 w-full border border-brand-900 flex-row px-4 items-center">
         <View>
           <Image
