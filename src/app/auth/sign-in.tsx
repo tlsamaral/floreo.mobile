@@ -2,13 +2,15 @@ import { TextInput } from '@/components/input'
 import { Button } from '@/components/ui/Button'
 import { Separator } from '@/components/ui/Separator'
 import { Text } from '@/components/ui/Text'
-import { Text as NativeText } from 'react-native'
+import { Alert, Text as NativeText } from 'react-native'
 import { Link, useRouter } from 'expo-router'
 import { View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { supabase } from '@/lib/supabase'
+import { Image } from 'react-native'
 
 const signInSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -29,14 +31,27 @@ export default function SignIn() {
   })
 
   async function handleSignIn(data: SignInFormData) {
-    console.log('Sign in Data:', data)
+    const { email, password } = data
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      Alert.alert('Erro ao entrar', error.message)
+      return
+    }
+
     router.replace('/(app)/(tabs)/home')
   }
 
   return (
     <View className="flex-1 gap-8 justify-center items-center">
       <View className="gap-8 w-full mt-auto">
-        <View>
+        <View className="flex-col items-center">
+          <Image source={require('../../../assets/images/logo.png')} />
+
           <Text className="text-2xl font-bold antialiased leading-tight text-center">
             Bem vindo de volta
           </Text>
