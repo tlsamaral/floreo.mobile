@@ -2,20 +2,26 @@ import { TextInput } from '@/components/input'
 import { Button } from '@/components/ui/Button'
 import { Separator } from '@/components/ui/Separator'
 import { Text } from '@/components/ui/Text'
-import { Text as NativeText } from 'react-native'
-import { Link } from 'expo-router'
+import { Alert, Text as NativeText } from 'react-native'
+import { Link, useRouter } from 'expo-router'
 import { View } from 'react-native'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { AntDesign } from '@expo/vector-icons'
+import { supabase } from '@/lib/supabase'
 
-const signUpSchema = z.object({
-  name: z.string().min(1, 'Nome é obrigatório'),
-  email: z.string().email('Email inválido'),
-  password: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres'),
-  confirmPassword: z.string().min(6, 'Confirmação de senha é obrigatória'),
-})
+const signUpSchema = z
+  .object({
+    name: z.string().min(1, 'Nome é obrigatório'),
+    email: z.string().email('Email inválido'),
+    password: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres'),
+    confirmPassword: z.string().min(6, 'Confirmação de senha é obrigatória'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem',
+    path: ['confirmPassword'],
+  })
 
 type SignUpFormData = z.infer<typeof signUpSchema>
 
@@ -30,8 +36,34 @@ export default function SignUp() {
     },
   })
 
-  async function handleSignUp(data: SignUpFormData) {
-    console.log('Sign Up Data:', data)
+  const router = useRouter()
+
+  async function handleSignUp({ email, password, name }: SignUpFormData) {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+        },
+      },
+    })
+
+    if (error) {
+      Alert.alert('Erro no cadastro', error.message)
+      return
+    }
+
+    Alert.alert(
+      'Cadastro realizado',
+      'Clique abaixo para entrar na sua conta',
+      [
+        {
+          text: 'OK',
+          onPress: () => router.replace('/auth/sign-in'),
+        },
+      ],
+    )
   }
 
   return (
