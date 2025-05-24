@@ -10,6 +10,7 @@ import {
 import { Stack } from 'expo-router'
 
 import '../styles/global.css'
+import { AuthProvider } from '@/contexts/auth-context'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -35,5 +36,9 @@ export default function RootLayout() {
     return null
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />
+  return (
+    <AuthProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </AuthProvider>
+  )
 }
