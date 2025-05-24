@@ -3,11 +3,24 @@ import { Asset } from 'expo-asset'
 import { Button } from '../components/ui/Button'
 import { useRouter } from 'expo-router'
 import { Text } from '@/components/ui/Text'
+import { useEffect } from 'react'
+import { useAuth } from '@/contexts/auth-context'
 
 const backgroundImage = Asset.fromModule(require('../assets/auth-root.png')).uri
 
 export default function Index() {
   const router = useRouter()
+
+  const { isAuthenticated, loading } = useAuth()
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      router.replace('/auth/sign-in')
+    } else if (!loading && isAuthenticated) {
+      router.replace('/(app)/(tabs)/home')
+    }
+  }, [isAuthenticated, loading, router])
+
   return (
     <ImageBackground
       source={{ uri: backgroundImage }}
@@ -19,7 +32,7 @@ export default function Index() {
           <Button
             className="rounded-full"
             variant="second"
-            onPress={() => router.push('/(app)/(tabs)/home')}
+            onPress={() => router.push('/auth/sign-up')}
           >
             <Text>Vamos começar</Text>
           </Button>
