@@ -16,10 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#EEF4EE"
       },
-      "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.CAMERA"
-      ],
+      "permissions": ["android.permission.CAMERA", "android.permission.CAMERA"],
       "package": "com.anonymous.floreo.mobile"
     },
     "web": {
@@ -39,7 +36,13 @@
           "backgroundColor": "#EEF4EE"
         }
       ],
-      "expo-barcode-scanner"
+      "expo-barcode-scanner",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps._some_id_here_"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
