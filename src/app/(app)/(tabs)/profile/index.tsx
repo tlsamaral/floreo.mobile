@@ -12,11 +12,21 @@ import {
 } from 'lucide-react-native'
 
 import Contants from 'expo-constants'
+import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/contexts/auth-context'
+import { getInitials } from '@/lib/utils'
 
 const statusBarHeight = Contants.statusBarHeight
 
 export default function ProfileScreen() {
   const router = useRouter()
+
+  const { user } = useAuth()
+
+  function handleSignOut() {
+    supabase.auth.signOut()
+    router.replace('/auth/sign-in')
+  }
 
   return (
     <View
@@ -26,12 +36,24 @@ export default function ProfileScreen() {
       <Text className="text-brand-900 text-2xl font-bold">Meu Perfil</Text>
 
       <View className="gap-4 items-center">
-        <Image source={require('@/assets/profile-image.png')} />
+        <View className="size-[180px] rounded-full overflow-hidden border-4 border-second-600">
+          {!user?.user_metadata.avatar_url ? (
+            <Image
+              source={{ uri: user?.user_metadata.avatar_url }}
+              style={{ width: 180, height: 180 }}
+            />
+          ) : (
+            <Text className="text-2xl uppercase text-brand-900">
+              {getInitials(user?.user_metadata.name)}
+            </Text>
+          )}
+        </View>
+        {/* <Image source={require('@/assets/profile-image.png')} /> */}
         <Text className="text-brand-900 text-2xl font-semibold leading-none">
-          Felipe Antonio
+          {user?.user_metadata.name}
         </Text>
         <Text className="text-brand-900 font-regular leading-none -mt-3">
-          @felipeantonio
+          {user?.user_metadata.email}
         </Text>
       </View>
 
@@ -79,7 +101,7 @@ export default function ProfileScreen() {
       <Button
         variant="brand"
         className="flex-row items-center gap-2 rounded-full w-full bg-brand-900"
-        onPress={() => router.push('/(app)/(tabs)/profile/change-password')}
+        onPress={handleSignOut}
       >
         <LogOut color="#fff" size={20} />
         <Text>Sair</Text>
