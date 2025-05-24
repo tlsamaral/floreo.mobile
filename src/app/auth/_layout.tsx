@@ -1,7 +1,9 @@
 import Contants from 'expo-constants'
 import { Asset } from 'expo-asset'
-import { Slot } from 'expo-router'
+import { router, Slot } from 'expo-router'
 import { ImageBackground, View } from 'react-native'
+import { useEffect } from 'react'
+import { useAuth } from '@/contexts/auth-context'
 
 const statusBarHeight = Contants.statusBarHeight
 const backgroundImage = Asset.fromModule(
@@ -9,6 +11,14 @@ const backgroundImage = Asset.fromModule(
 ).uri
 
 export default function AuthLayout() {
+  const { isAuthenticated } = useAuth()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/(app)/(tabs)/home')
+    }
+  }, [isAuthenticated])
+
   return (
     <ImageBackground
       source={{ uri: backgroundImage }}
