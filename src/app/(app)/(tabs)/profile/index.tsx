@@ -28,6 +28,8 @@ export default function ProfileScreen() {
     router.replace('/auth/sign-in')
   }
 
+  const initials = getInitials(user?.user_metadata.name)
+
   return (
     <View
       className="flex-1 items-center gap-14 bg-second-50 py-9 px-7"
@@ -36,15 +38,15 @@ export default function ProfileScreen() {
       <Text className="text-brand-900 text-2xl font-bold">Meu Perfil</Text>
 
       <View className="gap-4 items-center">
-        <View className="size-[180px] rounded-full overflow-hidden border-4 border-second-600">
-          {!user?.user_metadata.avatar_url ? (
+        <View className="size-[180px] rounded-full overflow-hidden border-4 border-second-600 flex items-center justify-center">
+          {user?.user_metadata.avatar_url ? (
             <Image
               source={{ uri: user?.user_metadata.avatar_url }}
               style={{ width: 180, height: 180 }}
             />
           ) : (
-            <Text className="text-2xl uppercase text-brand-900">
-              {getInitials(user?.user_metadata.name)}
+            <Text className="text-[60px] uppercase text-second-700">
+              {initials}
             </Text>
           )}
         </View>
