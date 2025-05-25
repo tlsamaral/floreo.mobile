@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { AntDesign } from '@expo/vector-icons'
 import { supabase } from '@/lib/supabase'
+import { generateUsername } from '@/lib/utils'
 
 const signUpSchema = z
   .object({
@@ -45,6 +46,8 @@ export default function SignUp() {
       options: {
         data: {
           name,
+          email,
+          username: generateUsername(name),
         },
       },
     })
