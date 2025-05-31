@@ -1,14 +1,53 @@
+import { useEffect, useState } from 'react'
+import { ScrollView, View, Alert } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Link } from 'expo-router'
 import { FloreoCard } from '@/components/floreo-card'
 import { NewFloreoButton } from '@/components/new-floreo-button'
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
-import { Link } from 'expo-router'
-import { ScrollView, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { supabase } from '@/lib/supabase'
+
+export type FloreoDevice = {
+  id: number
+  name: string | null
+  numeration: string | null
+  status: boolean | null
+}
 
 export default function EngineScreen() {
   const insets = useSafeAreaInsets()
-  const engines = Array.from({ length: 4 })
+  const [devices, setDevices] = useState<FloreoDevice[]>([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    async function loadDevices() {
+      setLoading(true)
+
+      const { data: userInfo, error: userError } = await supabase.auth.getUser()
+      const userId = userInfo?.user?.id
+
+      if (userError || !userId) {
+        Alert.alert('Erro', 'Não foi possível obter o usuário logado.')
+        return
+      }
+
+      const { data, error } = await supabase
+        .from('devices')
+        .select('id, name, numeration, status')
+        .eq('user_id', userId)
+
+      if (error) {
+        Alert.alert('Erro ao buscar dispositivos', error.message)
+      } else {
+        setDevices(data ?? [])
+      }
+
+      setLoading(false)
+    }
+
+    loadDevices()
+  }, [])
 
   return (
     <ScrollView
@@ -17,13 +56,19 @@ export default function EngineScreen() {
     >
       <View className="gap-4">
         <Text className="text-xl text-brand-800 font-medium">
-          {engines.length > 0 ? 'Esses são seus Floreos' : 'Não começou ainda?'}
+          {devices.length > 0 ? 'Esses são seus Floreos' : 'Não começou ainda?'}
         </Text>
-        {engines.map((_, index) => (
-          <FloreoCard key={index} />
+
+        {devices.map((device) => (
+          <FloreoCard
+            key={device.id}
+            id={device.id}
+            numeration={device.numeration ?? ''}
+            status={device.status ?? false}
+          />
         ))}
 
-        {engines.length > 0 ? (
+        {devices.length > 0 ? (
           <Link href="/(app)/(tabs)/engines/new-engine">
             <NewFloreoButton
               title="Adicionar novo Floreo"
