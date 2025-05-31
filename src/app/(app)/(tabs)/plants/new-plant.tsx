@@ -21,7 +21,7 @@ import { supabase } from '@/lib/supabase'
 
 import { mask } from 'remask'
 import usePlantRecommendations from '@/hooks/use-plant-recommendations'
-import { usePlantContext } from '@/contexts/plant-provider'
+import { usePlantContext } from '@/contexts/plant-context'
 
 const plantSchema = z.object({
   name: z.string().min(1, 'Nome original é obrigatório'),
