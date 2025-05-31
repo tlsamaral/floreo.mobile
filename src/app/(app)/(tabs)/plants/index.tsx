@@ -24,11 +24,13 @@ export default function PlantsScreen() {
         ))}
 
         {plants.length > 0 ? (
-          <Link href="/(app)/(tabs)/engines/plant-details">
-            <NewFloreoButton
-              title="Adicionar nova planta"
-              description="Clique aqui para conectar outro vaso inteligente."
-            />
+          <Link href="/(app)/(tabs)/plants/new-plant" asChild>
+            <Button
+              className="w-full rounded-full border-brand-900"
+              variant="brand"
+            >
+              <Text className="text-brand-50">Adicionar uma nova planta</Text>
+            </Button>
           </Link>
         ) : (
           <>
@@ -37,7 +39,7 @@ export default function PlantsScreen() {
               description="Clique abaixo para configurar seu vaso inteligente agora mesmo e dê vida às suas plantas!"
             />
 
-            <Link href="/(app)/(tabs)/engines/new-engine" asChild>
+            <Link href="/(app)/(tabs)/engines/plant-details" asChild>
               <Button
                 className="w-full rounded-full border-brand-900"
                 variant="outline"
