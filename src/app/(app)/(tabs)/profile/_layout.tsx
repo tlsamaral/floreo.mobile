@@ -12,7 +12,7 @@ export default function ProfileStackLayout() {
           header: () => (
             <AppHeader
               title="Atualizar perfil"
-              returnTo="/profile/change-profile"
+              returnTo="/(app)/(tabs)/profile"
             />
           ),
         }}
@@ -23,7 +23,7 @@ export default function ProfileStackLayout() {
           header: () => (
             <AppHeader
               title="Meu endereço"
-              returnTo="/profile/change-address"
+              returnTo="/(app)/(tabs)/profile"
             />
           ),
         }}
@@ -34,7 +34,7 @@ export default function ProfileStackLayout() {
           header: () => (
             <AppHeader
               title="Alterar minha senha"
-              returnTo="/profile/change-password"
+              returnTo="/(app)/(tabs)/profile"
             />
           ),
         }}
@@ -45,7 +45,7 @@ export default function ProfileStackLayout() {
           header: () => (
             <AppHeader
               title="Alterar minha senha"
-              returnTo="/profile/change-password-failure"
+              returnTo="/(app)/(tabs)/profile"
             />
           ),
         }}
