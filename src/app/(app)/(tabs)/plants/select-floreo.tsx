@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router'
 import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
 import { supabase } from '@/lib/supabase'
-import { usePlantContext } from '@/contexts/plant-provider'
+import { usePlantContext } from '@/contexts/plant-context'
 import { useAuth } from '@/contexts/auth-context'
 import { ArrowLeft, ArrowRight } from 'lucide-react-native'
 
