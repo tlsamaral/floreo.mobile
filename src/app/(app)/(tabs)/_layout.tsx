@@ -60,7 +60,7 @@ export default function TabsLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="analytics"
         options={{
           title: 'Análises',
@@ -70,7 +70,7 @@ export default function TabsLayout() {
             </View>
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="profile"
         options={{
