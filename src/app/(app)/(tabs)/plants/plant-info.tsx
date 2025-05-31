@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
-import { usePlantContext } from '@/contexts/plant-provider'
+import { usePlantContext } from '@/contexts/plant-context'
 import { ArrowLeft } from 'lucide-react-native'
 
 export default function PlantSummaryScreen() {
