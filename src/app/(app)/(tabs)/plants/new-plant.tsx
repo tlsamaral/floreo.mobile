@@ -67,7 +67,7 @@ const plantSchema = z.object({
     .min(1, 'Deve ser no mínimo 1 ml'),
 })
 
-type PlantFormData = z.infer<typeof plantSchema>
+export type PlantFormData = z.infer<typeof plantSchema>
 
 export default function PlantInfoScreen() {
   const insets = useSafeAreaInsets()
@@ -263,100 +263,100 @@ export default function PlantInfoScreen() {
       </Button>
 
 
-<View>
-  <Text className="text-lg text-brand-900">Temperatura mínima (°C)</Text>
-  <Controller
-    control={control}
-    name="minTemperatureCelsius"
-    render={({ field: { onChange, onBlur, value } }) => (
-      <TextInput
-        placeholder="Ex: 18"
-        keyboardType="numeric"
-        variant="normal-blur"
-        inputMode="numeric"
-        onChangeText={onChange}
-        onBlur={onBlur}
-        value={String(value)}
-      />
-    )}
-  />
-</View>
+        <View>
+          <Text className="text-lg text-brand-900">Temperatura mínima (°C)</Text>
+          <Controller
+            control={control}
+            name="minTemperatureCelsius"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Ex: 18"
+                keyboardType="numeric"
+                variant="normal-blur"
+                inputMode="numeric"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={String(value)}
+              />
+            )}
+          />
+        </View>
 
-<View>
-  <Text className="text-lg text-brand-900">Temperatura máxima (°C)</Text>
-  <Controller
-    control={control}
-    name="maxTemperatureCelsius"
-    render={({ field: { onChange, onBlur, value } }) => (
-      <TextInput
-        placeholder="Ex: 30"
-        keyboardType="numeric"
-        variant="normal-blur"
-        inputMode="numeric"
-        onChangeText={onChange}
-        onBlur={onBlur}
-        value={String(value)}
-      />
-    )}
-  />
-</View>
+        <View>
+          <Text className="text-lg text-brand-900">Temperatura máxima (°C)</Text>
+          <Controller
+            control={control}
+            name="maxTemperatureCelsius"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Ex: 30"
+                keyboardType="numeric"
+                variant="normal-blur"
+                inputMode="numeric"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={String(value)}
+              />
+            )}
+          />
+        </View>
 
-<View>
-  <Text className="text-lg text-brand-900">Luminosidade ideal (lux)</Text>
-  <Controller
-    control={control}
-    name="idealLuminosityLx"
-    render={({ field: { onChange, onBlur, value } }) => (
-      <TextInput
-        placeholder="Ex: 15000"
-        keyboardType="numeric"
-        variant="normal-blur"
-        inputMode="numeric"
-        onChangeText={onChange}
-        onBlur={onBlur}
-        value={String(value)}
-      />
-    )}
-  />
-</View>
+        <View>
+          <Text className="text-lg text-brand-900">Luminosidade ideal (lux)</Text>
+          <Controller
+            control={control}
+            name="idealLuminosityLx"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Ex: 15000"
+                keyboardType="numeric"
+                variant="normal-blur"
+                inputMode="numeric"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={String(value)}
+              />
+            )}
+          />
+        </View>
 
-<View>
-  <Text className="text-lg text-brand-900">Irrigações por dia</Text>
-  <Controller
-    control={control}
-    name="irrigationsPerDay"
-    render={({ field: { onChange, onBlur, value } }) => (
-      <TextInput
-        placeholder="Ex: 2"
-        keyboardType="numeric"
-        variant="normal-blur"
-        inputMode="numeric"
-        onChangeText={onChange}
-        onBlur={onBlur}
-        value={String(value)}
-      />
-    )}
-  />
-</View>
+        <View>
+          <Text className="text-lg text-brand-900">Irrigações por dia</Text>
+          <Controller
+            control={control}
+            name="irrigationsPerDay"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Ex: 2"
+                keyboardType="numeric"
+                variant="normal-blur"
+                inputMode="numeric"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={String(value)}
+              />
+            )}
+          />
+        </View>
 
-<View>
-  <Text className="text-lg text-brand-900">Mililitros por irrigação (ml)</Text>
-  <Controller
-    control={control}
-    name="mlPerIrrigation"
-    render={({ field: { onChange, onBlur, value } }) => (
-      <TextInput
-        placeholder="Ex: 200"
-        keyboardType="numeric"
-        variant="normal-blur"
-        inputMode="numeric"
-        onChangeText={onChange}
-        onBlur={onBlur}
-        value={String(value)}
-      />
-    )}
-  />
-</View>
+        <View>
+          <Text className="text-lg text-brand-900">Mililitros por irrigação (ml)</Text>
+          <Controller
+            control={control}
+            name="mlPerIrrigation"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Ex: 200"
+                keyboardType="numeric"
+                variant="normal-blur"
+                inputMode="numeric"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={String(value)}
+              />
+            )}
+          />
+        </View>
 
       </View>
 
