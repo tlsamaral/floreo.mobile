@@ -4,20 +4,32 @@ import { View } from 'react-native'
 import { Text } from './ui/Text'
 import { Link } from 'expo-router'
 
-export function FloreoCard() {
+export function FloreoCard({ id, numeration, status }: { id: number; numeration: string; status: boolean }) {
   return (
-    <Link href="/(app)/(tabs)/engines/1">
+    <Link href={`/(app)/(tabs)/engines/${id}`}>
       <Card className="bg-second-200 w-full border border-brand-900 flex-row">
         <View className="flex-1">
           <CardHeader className="flex-row items-center gap-2 pb-2">
             <Sprout size={24} color="#504120" />
-            <CardTitle className="text-second-900">FLR-2020</CardTitle>
+            <CardTitle className="text-second-900">{numeration}</CardTitle>
           </CardHeader>
           <CardContent className="flex-row items-center gap-2">
-            <View className="size-2 rounded-full bg-danger-500" />
-            <Text className="text-base font-medium text-second-700">
-              Desativado
-            </Text>
+            {status ? (
+              <>
+                <View className="size-2 rounded-full bg-green-500" />
+                <Text className="text-base font-medium text-second-700">
+                  Ativo
+                </Text>
+              </>
+            ) : (
+              <>
+                <View className="size-2 rounded-full bg-danger-500" />
+                <Text className="text-base font-medium text-second-700">
+                  Desativado
+                </Text>
+              </>
+            )}
+            
           </CardContent>
         </View>
         <View className="fitems-end justify-center pr-4">
