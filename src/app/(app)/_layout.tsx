@@ -16,7 +16,11 @@ export default function AppLayout() {
 
   const isNewEnginesRoute = pathname.startsWith('/engines/new-engine')
 
-  const canViewHeader = !isProfileRoute && !isNewEnginesRoute
+  const isPlantsRoute = pathname.startsWith('/plants')
+
+  const isNewPlantsRoute = pathname.startsWith('/plants/new-plant')
+
+  const canViewHeader = !isProfileRoute && !isNewEnginesRoute && !isPlantsRoute && !isNewPlantsRoute
 
   const { isAuthenticated, loading } = useAuth()
 
