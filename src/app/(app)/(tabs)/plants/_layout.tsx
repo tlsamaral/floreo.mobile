@@ -19,6 +19,12 @@ export default function EnginesStackLayout() {
           header: () => <AppHeader title="Minha planta" returnTo="/plants" />,
         }}
       />
+      <Stack.Screen
+        name="new-plant"
+        options={{
+          header: () => <AppHeader title="Cadastrar planta" returnTo="/plants" />,
+        }}
+      />
     </Stack>
   )
 }
