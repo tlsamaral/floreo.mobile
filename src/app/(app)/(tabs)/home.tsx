@@ -3,11 +3,47 @@ import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader } from '@/components/ui/Card'
 import { Separator } from '@/components/ui/Separator'
 import { Text } from '@/components/ui/Text'
-import { FlatList, Image, ScrollView, View } from 'react-native'
+import { supabase } from '@/lib/supabase'
+import { useEffect, useState } from 'react'
+import { Alert, FlatList, Image, ScrollView, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { FloreoDevice } from './engines'
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets()
+
+  const [devices, setDevices] = useState<FloreoDevice[]>([])
+  const [loading, setLoading] = useState(false)
+  
+  useEffect(() => {
+    async function loadDevices() {
+      setLoading(true)
+
+      const { data: userInfo, error: userError } = await supabase.auth.getUser()
+      const userId = userInfo?.user?.id
+
+      if (userError || !userId) {
+        Alert.alert('Erro', 'Não foi possível obter o usuário logado.')
+        return
+      }
+
+      const { data, error } = await supabase
+        .from('devices')
+        .select('id, name, numeration, status')
+        .eq('user_id', userId)
+
+      if (error) {
+        Alert.alert('Erro ao buscar dispositivos', error.message)
+      } else {
+        setDevices(data ?? [])
+      }
+
+      setLoading(false)
+    }
+
+    loadDevices()
+  }, [])
+
   return (
     <ScrollView
       className="flex-1 bg-second-50"
@@ -52,8 +88,10 @@ export default function HomeScreen() {
         </Text>
 
         <FlatList
-          data={[1, 2, 3, 4, 5]}
-          renderItem={() => <FloreoCard />}
+          data={devices}
+          renderItem={({ item: device }) => ( 
+            <FloreoCard id={device.id} numeration={device.numeration ?? ''} status={device.status ?? false} />
+          )}
           keyExtractor={(item) => item.toString()}
           contentContainerStyle={{ gap: 12 }}
           horizontal
