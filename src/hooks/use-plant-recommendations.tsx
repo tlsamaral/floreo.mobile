@@ -40,24 +40,24 @@ const usePlantRecommendations = (): UsePlantRecommendationsReturn => {
     setData(null)
 
     const prompt = `
-Forneça as recomendações ideais de luminosidade (em lux), temperatura (mínima e máxima em Celsius), frequência de irrigações por dia e volume de água (em ml) por irrigação para a planta "${plantName}".
+      Forneça as recomendações ideais de luminosidade (em lux), temperatura (mínima e máxima em Celsius), frequência de irrigações por dia e volume de água (em ml) por irrigação para a planta "${plantName}".
 
-A resposta deve ser APENAS um objeto JSON válido, sem texto adicional antes ou depois.
+      A resposta deve ser APENAS um objeto JSON válido, sem texto adicional antes ou depois.
 
-Formato do JSON esperado:
-\`\`\`json
-{
-  "planta": "NOME_DA_PLANTA",
-  "luminosidade_ideal_lx": NUMERO_LUX,
-  "temperatura_min_celsius": TEMPERATURA_MIN,
-  "temperatura_max_celsius": TEMPERATURA_MAX,
-  "irrigacoes_por_dia": NUMERO_IRRIGACOES,
-  "ml_por_irrigacao": VOLUME_ML
-}
-\`\`\`
+      Formato do JSON esperado:
+      \`\`\`json
+      {
+        "planta": "NOME_DA_PLANTA",
+        "luminosidade_ideal_lx": NUMERO_LUX,
+        "temperatura_min_celsius": TEMPERATURA_MIN,
+        "temperatura_max_celsius": TEMPERATURA_MAX,
+        "irrigacoes_por_dia": NUMERO_IRRIGACOES,
+        "ml_por_irrigacao": VOLUME_ML
+      }
+      \`\`\`
 
-Certifique-se de que os valores sejam realistas e apropriados para a espécie de planta "${plantName}".
-`;
+      Certifique-se de que os valores sejam realistas e apropriados para a espécie de planta "${plantName}".
+      `;
 
 
     try {
