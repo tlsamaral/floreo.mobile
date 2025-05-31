@@ -21,26 +21,13 @@ import { supabase } from '@/lib/supabase'
 
 import { mask } from 'remask'
 import usePlantRecommendations from '@/hooks/use-plant-recommendations'
+import { usePlantContext } from '@/contexts/plant-provider'
 
 const plantSchema = z.object({
   name: z.string().min(1, 'Nome original é obrigatório'),
   friendlyName: z.string().min(1, 'Nome comum é obrigatório'),
   date: z.string().min(1, 'Data é obrigatória'),
 
-  idealHumidity: z.coerce
-    .number({ invalid_type_error: 'Umidade deve ser um número' })
-    .min(0, 'Mínimo 0%')
-    .max(100, 'Máximo 100%'),
-
-  idealTemperature: z.coerce
-    .number({ invalid_type_error: 'Temperatura deve ser um número' })
-    .min(-50, 'Temperatura mínima inválida')
-    .max(100, 'Temperatura máxima inválida'),
-
-  idealLuminosity: z.coerce
-    .number({ invalid_type_error: 'Luminosidade deve ser um número' })
-    .min(0, 'Mínimo 0%')
-    .max(100, 'Máximo 100%'),
 
   minTemperatureCelsius: z.coerce
     .number({ invalid_type_error: 'Temperatura mínima deve ser um número' })
@@ -65,12 +52,15 @@ const plantSchema = z.object({
   mlPerIrrigation: z.coerce
     .number({ invalid_type_error: 'Volume de irrigação deve ser um número' })
     .min(1, 'Deve ser no mínimo 1 ml'),
+
+  imageUri: z.string().optional(),
 })
 
 export type PlantFormData = z.infer<typeof plantSchema>
 
 export default function PlantInfoScreen() {
   const insets = useSafeAreaInsets()
+  const { setPlantData } = usePlantContext()
   const { fetchRecommendations, data, error, loading: loadingRecommendations } = usePlantRecommendations()
 
   const router = useRouter()
@@ -82,9 +72,6 @@ export default function PlantInfoScreen() {
       name: '',
       friendlyName: '',
       date: '',
-      idealHumidity: 0,
-      idealTemperature: 0,
-      idealLuminosity: 0,
       minTemperatureCelsius: 0,
       maxTemperatureCelsius: 0,
       idealLuminosityLx: 0,
@@ -125,6 +112,8 @@ export default function PlantInfoScreen() {
       const { data: { publicUrl } } = supabase.storage.from('floreo').getPublicUrl(data?.path)
       setImageUri(publicUrl)
 
+      setValue('imageUri', publicUrl)
+
       if (error) {
         console.error('Erro ao fazer upload:', error)
       } else {
@@ -135,7 +124,9 @@ export default function PlantInfoScreen() {
 
   function handleContinue(data: PlantFormData) {
     console.log('Planta:', data)
-    // router.push('/engines/new-engine')
+    setPlantData(data)
+
+    router.push('/(app)/(tabs)/plants/select-floreo')
   }
 
   const plantOriginalName = watch('name')
@@ -150,19 +141,19 @@ export default function PlantInfoScreen() {
 
   await fetchRecommendations(plantOriginalName, plantDate)
 
-  if (error) {
-    Alert.alert('Erro ao buscar recomendações', error)
-  } else if (data) {
-    console.log('Recomendações:', data)
+    if (error) {
+      Alert.alert('Erro ao buscar recomendações', error)
+    } else if (data) {
+      console.log('Recomendações:', data)
 
-    // Preencher campos do formulário com os valores recebidos
-    setValue('irrigationsPerDay', data.irrigacoes_por_dia)
-    setValue('idealLuminosityLx', data.luminosidade_ideal_lx)
-    setValue('mlPerIrrigation', data.ml_por_irrigacao)
-    setValue('minTemperatureCelsius', data.temperatura_min_celsius)
-    setValue('maxTemperatureCelsius', data.temperatura_max_celsius)
+      // Preencher campos do formulário com os valores recebidos
+      setValue('irrigationsPerDay', data.irrigacoes_por_dia)
+      setValue('idealLuminosityLx', data.luminosidade_ideal_lx)
+      setValue('mlPerIrrigation', data.ml_por_irrigacao)
+      setValue('minTemperatureCelsius', data.temperatura_min_celsius)
+      setValue('maxTemperatureCelsius', data.temperatura_max_celsius)
+    }
   }
-}
 
 
   return (
