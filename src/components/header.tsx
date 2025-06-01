@@ -46,13 +46,12 @@ export function Header() {
   }, [user])
 
   const initials = getInitials(userInfo?.name || '')
-  console.log(userInfo)
 
   return (
     <View className="px-8 bg-second-50" style={{ paddingTop: statusBarHeight }}>
       <View className="pb-3 border-b border-b-second-600 flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">
-          <View className="w-12 h-12 rounded-full border border-second-600 overflow-hidden items-center justify-center bg-white">
+          <View className="w-12 h-12 rounded-full border-2 border-second-600 overflow-hidden items-center justify-center bg-white">
             {loading ? (
               <Skeleton className="size-12 rounded-full" />
             ) : userInfo?.avatarUrl ? (
