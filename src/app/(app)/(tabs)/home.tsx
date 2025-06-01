@@ -8,19 +8,32 @@ import { useEffect, useState } from 'react'
 import { Alert, FlatList, Image, ScrollView, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { FloreoDevice } from './engines'
+import { PlantHighligh } from '@/components/plant-highlight'
+
+export type Plant = {
+  id: number
+  friendlyName: string
+  name: string
+  species: string
+  plantingDate: string
+  imageUri: string
+}
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets()
 
   const [devices, setDevices] = useState<FloreoDevice[]>([])
+  const [plants, setPlants] = useState<Plant[]>([])
   const [loading, setLoading] = useState(false)
   
   useEffect(() => {
+    
     async function loadDevices() {
       setLoading(true)
-
+      
       const { data: userInfo, error: userError } = await supabase.auth.getUser()
       const userId = userInfo?.user?.id
+      
 
       if (userError || !userId) {
         Alert.alert('Erro', 'Não foi possível obter o usuário logado.')
@@ -32,10 +45,23 @@ export default function HomeScreen() {
         .select('id, name, numeration, status')
         .eq('user_id', userId)
 
-      if (error) {
-        Alert.alert('Erro ao buscar dispositivos', error.message)
+      const { data: plantsData, error: plantsError } = await supabase
+        .from('plants')
+        .select('id, friendlyName, name, species, plantingDate, imageUri')
+        .eq('user_id', userId)
+
+      if (error || plantsError) {
+        Alert.alert('Erro ao buscar dispositivos', error?.message)
       } else {
         setDevices(data ?? [])
+        setPlants(plantsData.map((item) => ({
+          id: item.id,
+          friendlyName: item.friendlyName ?? '',
+          imageUri: item.imageUri ?? '',
+          name: item.name ?? '',
+          species: item.species ?? '',
+          plantingDate: item.plantingDate ?? '',
+        })))
       }
 
       setLoading(false)
@@ -102,58 +128,19 @@ export default function HomeScreen() {
           Olhe só como estão suas plantas
         </Text>
 
-        {Array.from({ length: 4 }).map((_, index) => (
-          <Card
-            className="bg-second-200 w-full border border-brand-900"
-            key={index}
-          >
-            <CardHeader className="flex-row items-center gap-4">
-              <Image
-                source={require('../../../../assets/images/plant-base-image.png')}
-                className="size-[60px] rounded-lg"
-              />
-              <View>
-                <Text className="text-xl font-medium text-brand-800 text-left w-full">
-                  Natasha
-                </Text>
-                <Text className="text-sm font-medium text-brand-800 text-left w-full">
-                  Nephrolepis exaltata
-                </Text>
-                <Text className="text-sm font-medium text-brand-800 text-left w-full">
-                  Data do plantio: 30/03/2025
-                </Text>
-              </View>
-            </CardHeader>
-
-            <CardContent className="gap-4">
-              <Separator className="opacity-50 " />
-
-              <View className="flex-row items-center justify-between gap-4">
-                <Text className="text-base font-medium text-brand-800">
-                  A umidade está no padrão.
-                </Text>
-                <View className="size-4 bg-blue-500 rounded-full" />
-              </View>
-
-              <View className="flex-row items-center justify-between gap-4">
-                <Text className="text-base font-medium text-brand-800">
-                  A luminosidade está em 30% (muito abaixo ⚠)
-                </Text>
-                <View className="size-4 bg-yellow-500 rounded-full" />
-              </View>
-
-              <Button
-                variant="outline"
-                className="rounded-full border-brand-900"
-                size="sm"
-              >
-                <Text className="text-sm font-medium text-brand-800">
-                  Ver mais detalhes
-                </Text>
-              </Button>
-            </CardContent>
-          </Card>
+        {plants.map((plant) => (
+          <PlantHighligh
+            key={plant.id}
+            id={plant.id}
+            name={plant.name}
+            imageUri={plant.imageUri}
+            friendlyName={plant.friendlyName}
+            plantingDate={plant.plantingDate}
+            humidityStatus="A umidade está no padrão."
+            luminosityStatus="A luminosidade está em 30% (muito abaixo ⚠)"
+          />
         ))}
+
       </View>
     </ScrollView>
   )
