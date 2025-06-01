@@ -12,6 +12,7 @@ import { Stack } from 'expo-router'
 import '../styles/global.css'
 import { AuthProvider } from '@/contexts/auth-context'
 import { PlantProvider } from '@/contexts/plant-context'
+import { StatusBar } from 'react-native'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -38,10 +39,17 @@ export default function RootLayout() {
   }
 
   return (
-    <AuthProvider>
-      <PlantProvider>
-        <Stack screenOptions={{ headerShown: false }} />
-      </PlantProvider>
-    </AuthProvider>
+    <>
+      <StatusBar
+        backgroundColor="#F9F7F1" // Exemplo: cor clara combinando com seu app
+        barStyle="dark-content" // ou 'light-content' se for fundo escuro
+        translucent={false} // Se quiser sobrepor conteúdo, use true
+      />
+      <AuthProvider>
+        <PlantProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </PlantProvider>
+      </AuthProvider>
+    </>
   )
 }
