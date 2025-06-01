@@ -7,9 +7,15 @@ import { Image, ScrollView, View, Alert } from 'react-native'
 import { supabase } from '@/lib/supabase'
 import { ActivityIndicator } from 'react-native'
 import dayjs from 'dayjs'
+import usePlantFeedbacks from '@/hooks/use-plant-feedback'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function PlantScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
+
+  const insets = useSafeAreaInsets()
+  const { fetchFeedback, feedback } = usePlantFeedbacks()
+  
   const [plant, setPlant] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [sensorData, setSensorData] = useState<{ [key: string]: number }>({})
@@ -55,6 +61,13 @@ export default function PlantScreen() {
 
       setSensorData(latestValues)
 
+      await fetchFeedback({
+        planta: plantData.name,
+        horasDesdeUltimaIrrigacao: 7,
+        luminosidadeAtual: latestValues.luminosity,
+        temperaturaAtual: latestValues.temperature
+      })
+
       setLoading(false)
     }
 
@@ -72,7 +85,10 @@ export default function PlantScreen() {
   if (!plant) return null
 
   return (
-    <ScrollView className="flex-1 gap-4 px-8 py-7 bg-second-50">
+    <ScrollView 
+      className="flex-1 gap-4 px-8 py-7 bg-second-50" 
+      contentContainerStyle={{ paddingBottom: insets.bottom + 60 }}
+    >
       <View className="items-center gap-4">
         <View className="items-center gap-4">
           <Image
@@ -91,11 +107,22 @@ export default function PlantScreen() {
         </View>
 
         <Card className="w-full bg-second-200 border-brand-700">
-          <CardHeader className="flex-row justify-between items-center gap-2">
-            <CardTitle className="text-second-900 text-xl">
-              Status Atual: Excelente!
-            </CardTitle>
-            <Info size={20} color="#504120" />
+          <CardHeader className="gap-1">
+            <View className="flex-row justify-between items-center gap-2">
+              <CardTitle className="text-second-900 text-xl">
+                Status Atual: {feedback?.status}
+              </CardTitle>
+              <Info size={20} color="#504120" />
+            </View>
+            <View className='gap-2 flex-row items-center'>
+              <Text className="text-sm font-medium text-brand-800">
+                Risco:
+              </Text>
+
+              <Text className="text-sm font-medium text-brand-800">
+                {feedback?.risco}
+              </Text>
+            </View>
           </CardHeader>
         </Card>
 
@@ -134,13 +161,23 @@ export default function PlantScreen() {
 
         <Card className="w-full bg-brand-600 border-brand-900">
           <CardHeader className="flex-row justify-between items-center gap-2">
-            <CardTitle className="text-second-100 text-xl">Recomendações da IA</CardTitle>
+            <CardTitle className="text-second-100 text-xl">Feedback da IA</CardTitle>
             <BotMessageSquare size={20} color="#E8EFC1" />
           </CardHeader>
           <CardContent>
             <Text className="text-base font-medium text-second-300">
-              Sua planta está muito bem cuidada! Continue mantendo-a hidratada regularmente.
+              {feedback?.resumo}
             </Text>
+
+            <View className='mt-4 gap-2'>
+              <Text className="text-xl font-medium text-second-100">
+                Ação recomendada
+              </Text>
+
+              <Text className="text-base font-medium text-second-300">
+                {feedback?.acaoRecomendada}
+              </Text>
+            </View>
           </CardContent>
         </Card>
       </View>
