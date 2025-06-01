@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ScrollView, View, Alert } from 'react-native'
+import { ScrollView, View, Alert, ActivityIndicator } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Link } from 'expo-router'
 import { FloreoCard } from '@/components/floreo-card'
@@ -48,6 +48,14 @@ export default function EngineScreen() {
 
     loadDevices()
   }, [])
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-second-50">
+        <ActivityIndicator size="large" color="#504120" />
+      </View>
+    )
+  }
 
   return (
     <ScrollView

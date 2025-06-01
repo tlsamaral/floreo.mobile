@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/Separator'
 import { Text } from '@/components/ui/Text'
 import { supabase } from '@/lib/supabase'
 import { useEffect, useState } from 'react'
-import { Alert, FlatList, Image, ScrollView, View } from 'react-native'
+import { ActivityIndicator, Alert, FlatList, Image, ScrollView, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { FloreoDevice } from './engines'
 import { PlantHighligh } from '@/components/plant-highlight'
@@ -69,6 +69,14 @@ export default function HomeScreen() {
 
     loadDevices()
   }, [])
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-second-50">
+        <ActivityIndicator size="large" color="#504120" />
+      </View>
+    )
+  }
 
   return (
     <ScrollView
