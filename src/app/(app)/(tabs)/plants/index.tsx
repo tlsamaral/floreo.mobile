@@ -1,14 +1,54 @@
+import { useEffect, useState } from 'react'
 import { NewFloreoButton } from '@/components/new-floreo-button'
 import { PlantCard } from '@/components/plant-card'
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { Link } from 'expo-router'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, Alert } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { supabase } from '@/lib/supabase'
+import { Plant } from '../home'
 
 export default function PlantsScreen() {
   const insets = useSafeAreaInsets()
-  const plants = Array.from({ length: 4 })
+  const [plants, setPlants] = useState<Plant[]>([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    async function loadPlants() {
+      setLoading(true)
+
+      const { data: userInfo, error: userError } = await supabase.auth.getUser()
+      const userId = userInfo?.user?.id
+
+      if (userError || !userId) {
+        Alert.alert('Erro', 'Não foi possível obter o usuário logado.')
+        return
+      }
+
+      const { data, error } = await supabase
+        .from('plants')
+        .select('id, friendlyName, name, species, plantingDate, imageUri')
+        .eq('user_id', userId)
+
+      if (error) {
+        Alert.alert('Erro ao buscar plantas', error.message)
+      } else {
+        setPlants(data.map((item) => ({
+          id: item.id,
+          friendlyName: item.friendlyName ?? '',
+          imageUri: item.imageUri ?? '',
+          name: item.name ?? '',
+          species: item.species ?? '',
+          plantingDate: item.plantingDate ?? '',
+        })))
+      }
+
+      setLoading(false)
+    }
+
+    loadPlants()
+  }, [])
 
   return (
     <ScrollView
@@ -19,8 +59,15 @@ export default function PlantsScreen() {
         <Text className="text-xl text-brand-800 font-medium">
           {plants.length > 0 ? 'Essas são suas plantas' : 'Não começou ainda?'}
         </Text>
-        {plants.map((_, index) => (
-          <PlantCard key={index} />
+
+        {plants.map((plant) => (
+          <PlantCard
+            key={plant.id}
+            name={plant.name}
+            plantingDate={plant.plantingDate}
+            friendlyName={plant.friendlyName}
+            imageUri={plant.imageUri}
+          />
         ))}
 
         {plants.length > 0 ? (
