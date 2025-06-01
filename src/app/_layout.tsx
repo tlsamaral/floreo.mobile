@@ -1,6 +1,5 @@
 import { useFonts } from 'expo-font'
-import * as SplashScreen from 'expo-splash-screen'
-import { useEffect } from 'react'
+import 'react-native-reanimated'
 
 import {
   Poppins_400Regular,
@@ -14,12 +13,6 @@ import { AuthProvider } from '@/contexts/auth-context'
 import { PlantProvider } from '@/contexts/plant-context'
 import { StatusBar } from 'react-native'
 
-SplashScreen.preventAutoHideAsync()
-
-SplashScreen.setOptions({
-  duration: 1000,
-  fade: true,
-})
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -27,12 +20,6 @@ export default function RootLayout() {
     Poppins_500Medium,
     Poppins_700Bold,
   })
-
-  useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync()
-    }
-  }, [fontsLoaded])
 
   if (!fontsLoaded) {
     return null
