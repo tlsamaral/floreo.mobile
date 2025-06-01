@@ -6,15 +6,16 @@ import { Link } from 'expo-router'
 import dayjs from 'dayjs'
 
 interface PlantCardProps {
+  id: number
   name: string
   friendlyName: string
   plantingDate: string
   imageUri: string
 }
 
-export function PlantCard({ name, friendlyName, plantingDate, imageUri }: PlantCardProps) {
+export function PlantCard({ id, name, friendlyName, plantingDate, imageUri }: PlantCardProps) {
   return (
-    <Link href="/(app)/(tabs)/plants/1">
+    <Link href={`/(app)/(tabs)/plants/${id}`}>
       <Card className="bg-second-200 w-full border border-brand-900 flex-row px-4 items-center">
         <View>
           <Image
