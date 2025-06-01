@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Text } from '@/components/ui/Text'
-import { useLocalSearchParams } from 'expo-router'
-import { BotMessageSquare, ChartNoAxesColumn, Info } from 'lucide-react-native'
-import { Image, ScrollView, View, Alert } from 'react-native'
+import { router, useLocalSearchParams } from 'expo-router'
+import { ArrowLeft, BotMessageSquare, ChartNoAxesColumn, Info } from 'lucide-react-native'
+import { Image, ScrollView, View, Alert, TouchableOpacity } from 'react-native'
 import { supabase } from '@/lib/supabase'
 import { ActivityIndicator } from 'react-native'
 import dayjs from 'dayjs'
@@ -90,6 +90,16 @@ export default function PlantScreen() {
       contentContainerStyle={{ paddingBottom: insets.bottom + 60 }}
     >
       <View className="items-center gap-4">
+        <View className='flex-row items-center justify-start gap-2 w-full'>
+          <TouchableOpacity
+            onPress={() => router.replace('/(app)/(tabs)/plants/')}
+            className="flex-row items-center gap-2"
+          >
+            <ArrowLeft size={24} color="#1F3A1C" />
+            <Text className="text-lg font-semibold text-brand-900">Voltar</Text>
+          </TouchableOpacity>
+        </View>
+
         <View className="items-center gap-4">
           <Image
             source={{ uri: plant.imageUri }}
