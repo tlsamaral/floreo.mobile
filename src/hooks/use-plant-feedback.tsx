@@ -16,6 +16,7 @@ export type PlantFeedback = {
   resumo: string
   acaoRecomendada: string
   risco: string
+  status: string
 }
 
 type UsePlantFeedbacksReturn = {
@@ -46,9 +47,10 @@ const usePlantFeedbacks = (): UsePlantFeedbacksReturn => {
 
     Formato esperado do JSON:
     {
+      "status": "situação atual da planta descrita em uma palavra",
       "resumo": "breve resumo da situação atual da planta",
       "acaoRecomendada": "o que deve ser feito agora",
-      "risco": "risco atual para a planta, se houver"
+      "risco": "risco atual para a planta, se houver em uma palavra bem definida"
     }
 
     Responda apenas com um objeto JSON válido.`
