@@ -1,4 +1,4 @@
-import { ImageBackground, View } from 'react-native'
+import { Image, ImageBackground, View } from 'react-native'
 import { Asset } from 'expo-asset'
 import { Button } from '../components/ui/Button'
 import { useRouter } from 'expo-router'
@@ -15,7 +15,7 @@ export default function Index() {
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      router.replace('/auth/sign-in')
+      // router.replace('/auth/sign-in')
     } else if (!loading && isAuthenticated) {
       router.replace('/(app)/(tabs)/home')
     }
@@ -27,7 +27,15 @@ export default function Index() {
       style={{ flex: 1 }}
       resizeMode="cover"
     >
-      <View className="flex-1 flex-col justify-end items-end pb-[150px] px-6">
+      <View className="flex-1 flex-col justify-between items-center py-[120px] px-6">
+        <View className="flex-col items-center">
+          <Text className="text-[44px] font-medium antialiased leading-tight text-center">
+            Flóreo, cultivando inteligência.
+          </Text>
+
+          <Image source={require('../../assets/images/logo.png')} />
+        </View>
+
         <View className="flex-col gap-4 w-full ">
           <Button
             className="rounded-full"
