@@ -15,18 +15,43 @@ import Contants from 'expo-constants'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/auth-context'
 import { getInitials } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 const statusBarHeight = Contants.statusBarHeight
 
 export default function ProfileScreen() {
   const router = useRouter()
-
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
   const { user } = useAuth()
 
-  function handleSignOut() {
-    supabase.auth.signOut()
+  async function handleSignOut() {
+    await supabase.auth.signOut()
+
     router.replace('/auth/sign-in')
   }
+
+  useEffect(() => {
+    async function fetchUserAvatar() {
+      if (!user) return
+
+      const { data, error } = await supabase
+        .from('users') // Nome da sua tabela no Supabase
+        .select('avatarUrl')
+        .eq('id', user.id) // ou .eq('email', user.email) dependendo da sua chave
+        .single()
+
+      if (error) {
+        console.error('Erro ao buscar avatar:', error)
+        return
+      }
+
+      if (data?.avatarUrl) {
+        setAvatarUrl(data.avatarUrl)
+      }
+    }
+
+    fetchUserAvatar()
+  }, [user])
 
   const initials = getInitials(user?.user_metadata.name)
 
@@ -39,9 +64,9 @@ export default function ProfileScreen() {
 
       <View className="gap-4 items-center">
         <View className="size-[180px] rounded-full overflow-hidden border-4 border-second-600 flex items-center justify-center">
-          {user?.user_metadata.avatar_url ? (
+          {avatarUrl ? (
             <Image
-              source={{ uri: user?.user_metadata.avatar_url }}
+              source={{ uri: avatarUrl }}
               style={{ width: 180, height: 180 }}
             />
           ) : (
