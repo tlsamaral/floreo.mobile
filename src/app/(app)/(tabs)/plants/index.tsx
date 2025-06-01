@@ -63,6 +63,7 @@ export default function PlantsScreen() {
         {plants.map((plant) => (
           <PlantCard
             key={plant.id}
+            id={plant.id}
             name={plant.name}
             plantingDate={plant.plantingDate}
             friendlyName={plant.friendlyName}
