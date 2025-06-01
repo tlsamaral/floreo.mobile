@@ -4,7 +4,7 @@ import { PlantCard } from '@/components/plant-card'
 import { Button } from '@/components/ui/Button'
 import { Text } from '@/components/ui/Text'
 import { Link } from 'expo-router'
-import { ScrollView, View, Alert } from 'react-native'
+import { ScrollView, View, Alert, ActivityIndicator } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { supabase } from '@/lib/supabase'
 import { Plant } from '../home'
@@ -49,6 +49,14 @@ export default function PlantsScreen() {
 
     loadPlants()
   }, [])
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-second-50">
+        <ActivityIndicator size="large" color="#504120" />
+      </View>
+    )
+  }
 
   return (
     <ScrollView
