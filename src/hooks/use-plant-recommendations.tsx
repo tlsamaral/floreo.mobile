@@ -1,10 +1,7 @@
 import { useState, useCallback } from 'react'
 import { GoogleGenAI, Type } from '@google/genai'
 
-// ⚠️ AVISO: nunca exponha sua chave em produção!
-const API_KEY = 'AIzaSyD3NzMZ9hJpmjl4xH-W-EseOLSFp4K3R80'
-
-const genAI = new GoogleGenAI({ apiKey: API_KEY })
+const genAI = new GoogleGenAI({ apiKey: process.env.EXPO_PUBLIC_GOOGLE_API_KEY })
 
 // Tipos do retorno da IA
 type PlantRecommendation = {
