@@ -126,7 +126,7 @@ export default function HomeScreen() {
           renderItem={({ item: device }) => ( 
             <FloreoCard id={device.id} numeration={device.numeration ?? ''} status={device.status ?? false} />
           )}
-          keyExtractor={(item) => item.toString()}
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={{ gap: 12 }}
           horizontal
           showsHorizontalScrollIndicator={false}
