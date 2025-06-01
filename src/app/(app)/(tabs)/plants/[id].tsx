@@ -1,26 +1,91 @@
+import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Text } from '@/components/ui/Text'
 import { useLocalSearchParams } from 'expo-router'
 import { BotMessageSquare, ChartNoAxesColumn, Info } from 'lucide-react-native'
-import { Image, ScrollView, View } from 'react-native'
+import { Image, ScrollView, View, Alert } from 'react-native'
+import { supabase } from '@/lib/supabase'
+import { ActivityIndicator } from 'react-native'
+import dayjs from 'dayjs'
 
 export default function PlantScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
+  const [plant, setPlant] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [sensorData, setSensorData] = useState<{ [key: string]: number }>({})
+
+  useEffect(() => {
+    if (!id) return
+
+    async function loadData() {
+      setLoading(true)
+      // Busca os dados da planta
+      const { data: plantData, error: plantError } = await supabase
+        .from('plants')
+        .select('*')
+        .eq('id', Number(id))
+        .single()
+
+      if (plantError) {
+        Alert.alert('Erro ao carregar planta', plantError.message)
+        return
+      }
+
+      setPlant(plantData)
+
+      // Busca os dados mais recentes dos sensores
+      const { data: sensors, error: sensorError } = await supabase
+        .from('sensor_data')
+        .select('sensorType, value')
+        .eq('plantId', Number(id))
+        .order('recordedAt', { ascending: false })
+
+      if (sensorError) {
+        Alert.alert('Erro ao carregar sensores', sensorError.message)
+        return
+      }
+
+      const latestValues: { [key: string]: number } = {}
+
+      for (const sensor of sensors) {
+        if (!(sensor.sensorType! in latestValues)) {
+          latestValues[sensor.sensorType!] = sensor.value
+        }
+      }
+
+      setSensorData(latestValues)
+
+      setLoading(false)
+    }
+
+    loadData()
+  }, [id])
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-second-50">
+        <ActivityIndicator size="large" color="#504120" />
+      </View>
+    )
+  }
+
+  if (!plant) return null
+
   return (
     <ScrollView className="flex-1 gap-4 px-8 py-7 bg-second-50">
       <View className="items-center gap-4">
         <View className="items-center gap-4">
           <Image
-            source={require('../../../../../assets/images/profile-image.png')}
-            className="size-[60px] rounded-full border-second-600 border-2"
+            source={{ uri: plant.imageUri }}
+            className="size-[80px] rounded-full border-second-600 border-2"
           />
 
           <View className="gap-2 items-center">
             <Text className="text-2xl font-semibold text-brand-900">
-              Samabaia
+              {plant.friendlyName || 'Minha Planta'}
             </Text>
             <Text className="text-base font-medium text-brand-700">
-              Plantada em: 30/03/2023
+              Plantada em: {dayjs(plant.plantingDate).format('DD/MM/YYYY')}
             </Text>
           </View>
         </View>
@@ -43,43 +108,38 @@ export default function PlantScreen() {
           </CardHeader>
           <CardContent>
             <View className="flex-row items-center justify-between gap-2">
+              <Text className="text-base font-medium text-second-300">💦 Umidade</Text>
               <Text className="text-base font-medium text-second-300">
-                💦 Umidade
-              </Text>
-              <Text className="text-base font-medium text-second-300">
-                70% (ideal)
+                {sensorData['humidity'] ?? '--'}% (ideal)
               </Text>
             </View>
             <View className="flex-row items-center justify-between gap-2">
+              <Text className="text-base font-medium text-second-300">☀️ Luminosidade</Text>
               <Text className="text-base font-medium text-second-300">
-                ☀️ Luminosidade
-              </Text>
-              <Text className="text-base font-medium text-second-300">
-                76% (bom)
+                {sensorData['light'] ?? '--'} lux (bom)
               </Text>
             </View>
             <View className="flex-row items-center justify-between gap-2">
+              <Text className="text-base font-medium text-second-300">🌡️ Temperatura</Text>
               <Text className="text-base font-medium text-second-300">
-                ⏳ Próxima irrigação
+                {sensorData['temperature'] ?? '--'} °C
               </Text>
-              <Text className="text-base font-medium text-second-300">
-                Hoje às 18:00
-              </Text>
+            </View>
+            <View className="flex-row items-center justify-between gap-2">
+              <Text className="text-base font-medium text-second-300">⏳ Próxima irrigação</Text>
+              <Text className="text-base font-medium text-second-300">Hoje às 18:00</Text>
             </View>
           </CardContent>
         </Card>
 
         <Card className="w-full bg-brand-600 border-brand-900">
           <CardHeader className="flex-row justify-between items-center gap-2">
-            <CardTitle className="text-second-100 text-xl">
-              Recomendações da IA
-            </CardTitle>
+            <CardTitle className="text-second-100 text-xl">Recomendações da IA</CardTitle>
             <BotMessageSquare size={20} color="#E8EFC1" />
           </CardHeader>
           <CardContent>
             <Text className="text-base font-medium text-second-300">
-              Sua planta está muito bem cuidada! Continue mantendo-a hidratada
-              regularmente.
+              Sua planta está muito bem cuidada! Continue mantendo-a hidratada regularmente.
             </Text>
           </CardContent>
         </Card>
