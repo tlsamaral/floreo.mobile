@@ -3,9 +3,9 @@ import { createClient } from '@supabase/supabase-js'
 import { AppState } from 'react-native'
 import { Database } from '../../database.types'
 
-const supabaseUrl = 'https://esjobcrtogflaznfzeze.supabase.co'
+const supabaseUrl = ''
 const supabaseAnonKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzam9iY3J0b2dmbGF6bmZ6ZXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwODk3MTcsImV4cCI6MjA2MzY2NTcxN30.DvHcbIS5Naa91SxuXXxCLWVS1hXuXclbS6Ypf3-hfzQ'
+  ''
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   auth: {
